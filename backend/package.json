@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+   "start": "node ./backend/app.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,10 @@
     "express": "^4.19.2",
     "mysql2": "^2.3.3",
     "sequelize": "^6.37.3"
+  },
+
+  "engines": {
+  "node": "20.9.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
