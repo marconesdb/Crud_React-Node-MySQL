@@ -54,6 +54,9 @@ const UserList = () => {
       console.error('Erro ao buscar usuários:', error);
     }
   };
+
+
+  
   
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
@@ -210,11 +213,11 @@ const UserList = () => {
       </div>
 
 
-      <div className="mb-4 mt-4 flex items-center">
+      <div className="mb-4 mt-4 flex items-center ">
   
         <input
           type="text"
-          className="px-4 py-2 border border-gray-300 rounded mr-2 w-3/12"
+          className="px-4 py-2 border border-gray-300 rounded mr-2 w-full max-w-md"
           placeholder="Pesquisar por nome ou ID"
           value={searchTerm}
           onChange={handleInputChange}
