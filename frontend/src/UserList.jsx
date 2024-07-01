@@ -234,11 +234,11 @@ const UserList = () => {
       <ul className="divide-y text-slate-500 divide-gray-500">
         {userListToRender.map((user) => (
           <li key={user.id} className="py-4 bg-slate-300 px-4">
-            <p className="font-bold">{user.nome}</p>
-            <p>{user.email}</p>
-            <p>{user.telefone}</p>
-            <p>{user.cpf}</p>
-            <p>{user.dataNascimento}</p>
+            <p className="font-bold text-lg">{user.nome}</p>
+            <p><strong><em>Email:</em></strong> {user.email}</p>
+            <p><strong><em>Telefone:</em> </strong>{user.telefone}</p>
+            <p><strong><em>CPF:</em></strong> {user.cpf}</p>
+            <p><strong><em>Data de Nascimento:</em></strong> {user.dataNascimento}</p>
             <div className="flex mt-2">
               {editingUserId === user.id ? (
                 <form onSubmit={handleUpdateUser} className="space-y-4">
