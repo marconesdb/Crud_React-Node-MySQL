@@ -214,7 +214,7 @@ const UserList = () => {
   
         <input
           type="text"
-          className="px-4 py-2 border border-gray-300 rounded mr-2"
+          className="px-4 py-2 border border-gray-300 rounded mr-2 w-3/12"
           placeholder="Pesquisar por nome ou ID"
           value={searchTerm}
           onChange={handleInputChange}
