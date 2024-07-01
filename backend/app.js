@@ -1,4 +1,3 @@
-// backend/app.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -45,16 +44,16 @@ const emitUserEvent = (userData) => {
   eventEmitter.emit('userUpdate', userData);
 };
 
-// Verifica a conexão com o banco de dados
+// Verifica a conexão com o banco de dados e inicia o servidor
 sequelize
   .authenticate()
   .then(() => {
     console.log('Conexão estabelecida com sucesso.');
+
+    app.listen(PORT, () => {
+      console.log(`Servidor rodando na porta ${PORT}`);
+    });
   })
   .catch((err) => {
     console.error('Erro ao conectar ao banco de dados:', err);
   });
-
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
