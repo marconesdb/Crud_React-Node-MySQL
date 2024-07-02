@@ -30,4 +30,5 @@ npm install react-icons --save
 
 npm install eventsource
 
+npm install react-toastify
 
