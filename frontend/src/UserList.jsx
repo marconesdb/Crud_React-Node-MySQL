@@ -17,7 +17,8 @@ const UserList = () => {
     dataNascimento: ''
   });
   const [editingUserId, setEditingUserId] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(''); // New state for error messages
+  const [errorMessage, setErrorMessage] = useState('');
+  const [confirmationMessage, setConfirmationMessage] = useState('');
 
   useEffect(() => {
     const eventSource = new EventSource('http://localhost:3000/api/events');
@@ -83,12 +84,16 @@ const UserList = () => {
       const response = await axios.get('http://localhost:3000/api/users');
       setUsers(response.data);
       setFilteredUsers(response.data);
-      setErrorMessage(''); // Clear any previous error messages
+      setConfirmationMessage('Usuário cadastrado com sucesso.');
+      setErrorMessage('');
+      setTimeout(() => {
+        setConfirmationMessage('');
+      }, 10000); // Clear message after 10 seconds
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        setErrorMessage('Usuário já cadastrado com este email, telefone, CPF ou nome.'); // Show error message
+        setErrorMessage('Usuário já cadastrado com este email, telefone, CPF ou nome.');
       } else {
-        setErrorMessage('Erro ao cadastrar usuário.'); // General error message
+        setErrorMessage('Erro ao cadastrar usuário.');
       }
       console.error('Erro ao cadastrar usuário:', error);
     }
@@ -100,6 +105,10 @@ const UserList = () => {
       const response = await axios.get('http://localhost:3000/api/users');
       setUsers(response.data);
       setFilteredUsers(response.data);
+      setConfirmationMessage('Usuário excluído com sucesso.');
+      setTimeout(() => {
+        setConfirmationMessage('');
+      }, 10000); // Clear message after 10 seconds
     } catch (error) {
       console.error('Erro ao excluir usuário:', error);
     }
@@ -136,6 +145,10 @@ const UserList = () => {
       const response = await axios.get('http://localhost:3000/api/users');
       setUsers(response.data);
       setFilteredUsers(response.data);
+      setConfirmationMessage('Usuário atualizado com sucesso.');
+      setTimeout(() => {
+        setConfirmationMessage('');
+      }, 10000); // Clear message after 10 seconds
     } catch (error) {
       console.error('Erro ao atualizar usuário:', error);
     }
@@ -148,6 +161,11 @@ const UserList = () => {
         {errorMessage && (
           <div className="mb-4 text-red-500 font-bold">
             {errorMessage}
+          </div>
+        )}
+        {confirmationMessage && (
+          <div className="mb-4 text-yellow-400 font-bold">
+            {confirmationMessage}
           </div>
         )}
         <form onSubmit={handleAddUser} className="space-y-4">
@@ -252,7 +270,7 @@ const UserList = () => {
         ) : (
           filteredUsers.map((user) => (
             <li key={user.id} className="py-4 bg-slate-300 px-4">
-              <p className="font-bold text-lg">{user.nome}</p>
+              <p className="font-bold text-lg text-black">{user.nome}</p>
               <p><strong><em>Endereço:</em></strong> {user.endereco}</p>
               <p><strong><em>Email:</em></strong> {user.email}</p>
               <p><strong><em>Telefone:</em> </strong>{user.telefone}</p>
@@ -352,7 +370,11 @@ const UserList = () => {
                     <FontAwesomeIcon
                       icon={faTrashAlt}
                       className="text-red-500 cursor-pointer"
-                      onClick={() => handleDeleteUser(user.id)}
+                      onClick={() => {
+                        if (window.confirm(`Tem certeza que deseja excluir o usuário ${user.nome}?`)) {
+                          handleDeleteUser(user.id);
+                        }
+                      }}
                     />
                   </div>
                 )}
