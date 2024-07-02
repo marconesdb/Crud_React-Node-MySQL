@@ -32,3 +32,7 @@ npm install eventsource
 
 npm install react-toastify
 
+Primeiro, instalaremos a biblioteca react-input-mask para facilitar a aplicação das máscaras de entrada.
+npm install react-input-mask
+
+

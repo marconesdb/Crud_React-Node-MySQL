@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import InputMask from 'react-input-mask';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -159,6 +160,7 @@ const UserList = () => {
                 value={newUser.nome}
                 onChange={handleInputChangeNewUser}
                 className="px-4 py-2 border border-gray-300 rounded w-full"
+                placeholder="Digite o nome"
                 required
               />
             </div>
@@ -170,6 +172,7 @@ const UserList = () => {
                 value={newUser.email}
                 onChange={handleInputChangeNewUser}
                 className="px-4 py-2 border border-gray-300 rounded w-full"
+                placeholder="Digite o email"
                 required
               />
             </div>
@@ -181,26 +184,33 @@ const UserList = () => {
                 value={newUser.endereco}
                 onChange={handleInputChangeNewUser}
                 className="px-4 py-2 border border-gray-300 rounded w-full"
+                placeholder="Digite o endereço"
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
               <label className="block mb-1">Telefone:</label>
-              <input
+              <InputMask
+                mask="(99) 99999-9999"
+                maskChar=""
                 type="text"
                 name="telefone"
                 value={newUser.telefone}
                 onChange={handleInputChangeNewUser}
                 className="px-4 py-2 border border-gray-300 rounded w-full"
+                placeholder="Digite o telefone"
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
               <label className="block mb-1">CPF:</label>
-              <input
+              <InputMask
+                mask="999.999.999-99"
+                maskChar=""
                 type="text"
                 name="cpf"
                 value={newUser.cpf}
                 onChange={handleInputChangeNewUser}
                 className="px-4 py-2 border border-gray-300 rounded w-full"
+                placeholder="Digite o CPF"
                 required
               />
             </div>
@@ -260,6 +270,7 @@ const UserList = () => {
                           value={newUser.nome}
                           onChange={handleInputChangeNewUser}
                           className="px-4 py-2 border border-gray-300 rounded w-full"
+                          placeholder="Digite o nome"
                           required
                         />
                       </div>
@@ -271,6 +282,7 @@ const UserList = () => {
                           value={newUser.email}
                           onChange={handleInputChangeNewUser}
                           className="px-4 py-2 border border-gray-300 rounded w-full"
+                          placeholder="Digite o email"
                           required
                         />
                       </div>
@@ -282,26 +294,33 @@ const UserList = () => {
                           value={newUser.endereco}
                           onChange={handleInputChangeNewUser}
                           className="px-4 py-2 border border-gray-300 rounded w-full"
+                          placeholder="Digite o endereço"
                         />
                       </div>
                       <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                         <label className="block mb-1">Telefone:</label>
-                        <input
+                        <InputMask
+                          mask="(99) 99999-9999"
+                          maskChar=""
                           type="text"
                           name="telefone"
                           value={newUser.telefone}
                           onChange={handleInputChangeNewUser}
                           className="px-4 py-2 border border-gray-300 rounded w-full"
+                          placeholder="Digite o telefone"
                         />
                       </div>
                       <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                         <label className="block mb-1">CPF:</label>
-                        <input
+                        <InputMask
+                          mask="999.999.999-99"
+                          maskChar=""
                           type="text"
                           name="cpf"
                           value={newUser.cpf}
                           onChange={handleInputChangeNewUser}
                           className="px-4 py-2 border border-gray-300 rounded w-full"
+                          placeholder="Digite o CPF"
                           required
                         />
                       </div>
