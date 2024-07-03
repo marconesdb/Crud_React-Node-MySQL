@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import  { useEffect, useState } from 'react';
 import axios from 'axios';
 import MaskedInput from 'react-text-mask';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,16 +20,10 @@ const UserList = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [userMessages, setUserMessages] = useState({});
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
 
   useEffect(() => {
-    const eventSource = new EventSource('http://localhost:3000/api/events');
-
-    eventSource.onmessage = (event) => {
-      const updatedUsers = JSON.parse(event.data);
-      setUsers(updatedUsers);
-      setFilteredUsers(updatedUsers);
-    };
-
     const fetchUsers = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/users');
@@ -41,10 +35,6 @@ const UserList = () => {
     };
 
     fetchUsers();
-
-    return () => {
-      eventSource.close();
-    };
   }, []);
 
   useEffect(() => {
@@ -167,6 +157,23 @@ const UserList = () => {
     }
   };
 
+  const openModal = (user) => {
+    setUserToDelete(user);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setUserToDelete(null);
+  };
+
+  const confirmDeleteUser = () => {
+    if (userToDelete) {
+      handleDeleteUser(userToDelete.id);
+      closeModal();
+    }
+  };
+
   return (
     <div className="p-4 bg-slate-800">
       <div className="mt-4 bg-neutral-500 p-4">
@@ -286,7 +293,7 @@ const UserList = () => {
               <p><strong><em>CPF:</em></strong> {user.cpf}</p>
               <p><strong><em>Data de Nascimento:</em></strong> {user.dataNascimento}</p>
               {userMessages[user.id] && (
-                <div className="mb-4 text-yellow-400 font-bold">
+                <div className="mb-4 text-sky-700 font-bold">
                   {userMessages[user.id]}
                 </div>
               )}
@@ -380,11 +387,7 @@ const UserList = () => {
                     <FontAwesomeIcon
                       icon={faTrashAlt}
                       className="text-red-500 cursor-pointer"
-                      onClick={() => {
-                        if (window.confirm(`Tem certeza que deseja excluir o usuário ${user.nome}?`)) {
-                          handleDeleteUser(user.id);
-                        }
-                      }}
+                      onClick={() => openModal(user)}
                     />
                   </div>
                 )}
@@ -393,6 +396,30 @@ const UserList = () => {
           ))
         )}
       </ul>
+
+      {/* Modal para confirmar exclusão */}
+      {modalIsOpen && (
+        <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-800 bg-opacity-75">
+          <div className="bg-white p-4 rounded shadow-md">
+            <p className="text-lg font-bold mb-4">Confirmar Exclusão</p>
+            <p>Tem certeza que deseja excluir o usuário {userToDelete.nome}?</p>
+            <div className="mt-4 flex justify-end">
+              <button
+                className="px-4 py-2 bg-red-500 text-white rounded mr-2"
+                onClick={confirmDeleteUser}
+              >
+                Excluir
+              </button>
+              <button
+                className="px-4 py-2 bg-gray-300 rounded"
+                onClick={closeModal}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
