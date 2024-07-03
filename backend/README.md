@@ -30,7 +30,10 @@ npm install react-icons --save
 
 npm install eventsource
 
-npm install react-toastify
+npm install react-modal
+
+npm install react-input-mask@next
+
 
 Primeiro, instalaremos a biblioteca react-input-mask para facilitar a aplicação das máscaras de entrada.
 npm install react-input-mask

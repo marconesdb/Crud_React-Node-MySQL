@@ -1,6 +1,6 @@
-import  { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import InputMask from 'react-input-mask';
+import MaskedInput from 'react-text-mask';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -220,28 +220,24 @@ const UserList = () => {
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
               <label className="block mb-1 font-bold">Telefone:</label>
-              <InputMask
-                mask="(99) 99999-9999"
-                maskChar=""
-                type="text"
-                name="telefone"
-                value={newUser.telefone}
-                onChange={handleInputChangeNewUser}
+              <MaskedInput
+                mask={['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                 className="px-4 py-2 border border-gray-300 rounded w-full"
                 placeholder="Digite o telefone"
+                value={newUser.telefone}
+                name="telefone"
+                onChange={handleInputChangeNewUser}
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
               <label className="block mb-1 font-bold">CPF:</label>
-              <InputMask
-                mask="999.999.999-99"
-                maskChar=""
-                type="text"
-                name="cpf"
-                value={newUser.cpf}
-                onChange={handleInputChangeNewUser}
+              <MaskedInput
+                mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]}
                 className="px-4 py-2 border border-gray-300 rounded w-full"
                 placeholder="Digite o CPF"
+                value={newUser.cpf}
+                name="cpf"
+                onChange={handleInputChangeNewUser}
                 required
               />
             </div>
@@ -335,28 +331,24 @@ const UserList = () => {
                       </div>
                       <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                         <label className="block mb-1">Telefone:</label>
-                        <InputMask
-                          mask="(99) 99999-9999"
-                          maskChar=""
-                          type="text"
-                          name="telefone"
-                          value={newUser.telefone}
-                          onChange={handleInputChangeNewUser}
+                        <MaskedInput
+                          mask={['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                           className="px-4 py-2 border border-gray-300 rounded w-full"
                           placeholder="Digite o telefone"
+                          value={newUser.telefone}
+                          name="telefone"
+                          onChange={handleInputChangeNewUser}
                         />
                       </div>
                       <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                         <label className="block mb-1">CPF:</label>
-                        <InputMask
-                          mask="999.999.999-99"
-                          maskChar=""
-                          type="text"
-                          name="cpf"
-                          value={newUser.cpf}
-                          onChange={handleInputChangeNewUser}
+                        <MaskedInput
+                          mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]}
                           className="px-4 py-2 border border-gray-300 rounded w-full"
                           placeholder="Digite o CPF"
+                          value={newUser.cpf}
+                          name="cpf"
+                          onChange={handleInputChangeNewUser}
                           required
                         />
                       </div>
