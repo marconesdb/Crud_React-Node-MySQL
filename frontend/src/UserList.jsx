@@ -1,10 +1,11 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import MaskedInput from 'react-text-mask';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const UserList = () => {
+  // State para armazenar a lista de usuários, termo de pesquisa, usuários filtrados, novo usuário, etc.
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -23,6 +24,7 @@ const UserList = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
 
+  // Efeito para buscar os usuários ao montar o componente
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -37,6 +39,7 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
+  // Efeito para filtrar usuários com base no termo de pesquisa
   useEffect(() => {
     if (searchTerm.trim() === '') {
       setFilteredUsers(users);
@@ -51,15 +54,18 @@ const UserList = () => {
     }
   }, [searchTerm, users]);
 
+  // Handler para atualizar o termo de pesquisa
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
+  // Handler para atualizar o estado do novo usuário durante a entrada de dados
   const handleInputChangeNewUser = (e) => {
     const { name, value } = e.target;
     setNewUser({ ...newUser, [name]: value });
   };
 
+  // Handler para adicionar um novo usuário
   const handleAddUser = async (e) => {
     e.preventDefault();
     try {
@@ -79,7 +85,7 @@ const UserList = () => {
       setErrorMessage('');
       setTimeout(() => {
         setConfirmationMessage('');
-      }, 10000); // Clear message after 10 seconds
+      }, 10000); // Limpa a mensagem de confirmação após 10 segundos
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrorMessage('Usuário já cadastrado com este email, telefone, CPF ou nome.');
@@ -90,6 +96,7 @@ const UserList = () => {
     }
   };
 
+  // Handler para deletar um usuário
   const handleDeleteUser = async (userId) => {
     try {
       await axios.delete(`http://localhost:3000/api/users/${userId}`);
@@ -105,12 +112,13 @@ const UserList = () => {
           ...prevMessages,
           [userId]: ''
         }));
-      }, 10000); // Clear message after 10 seconds
+      }, 10000); // Limpa a mensagem de usuário após 10 segundos
     } catch (error) {
       console.error('Erro ao excluir usuário:', error);
     }
   };
 
+  // Handler para editar um usuário
   const handleEditUser = (userId) => {
     setEditingUserId(userId);
     const userToEdit = users.find(user => user.id === userId);
@@ -126,6 +134,7 @@ const UserList = () => {
     }
   };
 
+  // Handler para atualizar um usuário
   const handleUpdateUser = async (e) => {
     e.preventDefault();
     try {
@@ -151,22 +160,25 @@ const UserList = () => {
           ...prevMessages,
           [editingUserId]: ''
         }));
-      }, 10000); // Clear message after 10 seconds
+      }, 10000); // Limpa a mensagem de usuário após 10 segundos
     } catch (error) {
       console.error('Erro ao atualizar usuário:', error);
     }
   };
 
+  // Handler para abrir o modal de confirmação de exclusão
   const openModal = (user) => {
     setUserToDelete(user);
     setModalIsOpen(true);
   };
 
+  // Handler para fechar o modal de confirmação de exclusão
   const closeModal = () => {
     setModalIsOpen(false);
     setUserToDelete(null);
   };
 
+  // Handler para confirmar a exclusão de um usuário
   const confirmDeleteUser = () => {
     if (userToDelete) {
       handleDeleteUser(userToDelete.id);
@@ -178,18 +190,22 @@ const UserList = () => {
     <div className="p-4 bg-slate-800">
       <div className="mt-4 bg-neutral-500 p-4">
         <h2 className="text-xl font-bold mb-2">Adicionar Novo Usuário</h2>
+        {/* Mensagem de erro ao cadastrar usuário */}
         {errorMessage && (
           <div className="mb-4 text-red-500 font-bold">
             {errorMessage}
           </div>
         )}
+        {/* Mensagem de confirmação ao cadastrar usuário */}
         {confirmationMessage && (
           <div className="mb-4 text-yellow-400 font-bold">
             {confirmationMessage}
           </div>
         )}
+        {/* Formulário para adicionar novo usuário */}
         <form onSubmit={handleAddUser} className="space-y-4">
           <div className="flex flex-wrap -mx-2">
+            {/* Input para nome */}
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
               <label className="block mb-1 font-bold">Nome:</label>
               <input
@@ -202,6 +218,7 @@ const UserList = () => {
                 required
               />
             </div>
+            {/* Input para email */}
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
               <label className="block mb-1 font-bold">Email:</label>
               <input
@@ -214,6 +231,7 @@ const UserList = () => {
                 required
               />
             </div>
+            {/* Input para endereço */}
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
               <label className="block mb-1 font-bold">Endereço:</label>
               <input
@@ -225,6 +243,7 @@ const UserList = () => {
                 placeholder="Digite o endereço"
               />
             </div>
+            {/* Input para telefone com máscara */}
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
               <label className="block mb-1 font-bold">Telefone:</label>
               <MaskedInput
@@ -236,6 +255,7 @@ const UserList = () => {
                 onChange={handleInputChangeNewUser}
               />
             </div>
+            {/* Input para CPF com máscara */}
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
               <label className="block mb-1 font-bold">CPF:</label>
               <MaskedInput
@@ -248,6 +268,7 @@ const UserList = () => {
                 required
               />
             </div>
+            {/* Input para data de nascimento */}
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
               <label className="block mb-1 font-bold">Data de Nascimento:</label>
               <input
@@ -259,6 +280,7 @@ const UserList = () => {
               />
             </div>
           </div>
+          {/* Botão para cadastrar usuário */}
           <button
             type="submit"
             className="px-4 py-2 bg-green-500 text-white rounded"
@@ -268,6 +290,7 @@ const UserList = () => {
         </form>
       </div>
 
+      {/* Input para buscar usuários */}
       <div className="mb-4 mt-4 flex items-center">
         <input
           type="text"
@@ -278,12 +301,16 @@ const UserList = () => {
         />
       </div>
 
+      {/* Título para lista de usuários */}
       <h1 className="text-2xl font-bold mb-4 text-lime-500">Lista de Usuários</h1>
 
+      {/* Lista de usuários */}
       <ul className="divide-y text-slate-500 divide-gray-500">
+        {/* Exibe mensagem se nenhum usuário for encontrado */}
         {filteredUsers.length === 0 ? (
           <li className="py-4 bg-slate-300 px-4 text-center">Nenhum usuário encontrado.</li>
         ) : (
+          // Mapeia e exibe cada usuário encontrado
           filteredUsers.map((user) => (
             <li key={user.id} className="py-4 bg-slate-300 px-4">
               <p className="font-bold text-lg text-black">{user.nome}</p>
@@ -292,15 +319,18 @@ const UserList = () => {
               <p><strong><em>Telefone:</em> </strong>{user.telefone}</p>
               <p><strong><em>CPF:</em></strong> {user.cpf}</p>
               <p><strong><em>Data de Nascimento:</em></strong> {user.dataNascimento}</p>
+              {/* Exibe mensagem de usuário específico, se houver */}
               {userMessages[user.id] && (
                 <div className="mb-4 text-sky-700 font-bold">
                   {userMessages[user.id]}
                 </div>
               )}
               <div className="flex mt-2">
+                {/* Formulário de edição de usuário */}
                 {editingUserId === user.id ? (
                   <form onSubmit={handleUpdateUser} className="space-y-4">
                     <div className="flex flex-wrap -mx-2">
+                      {/* Input para nome (editável) */}
                       <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                         <label className="block mb-1">Nome:</label>
                         <input
@@ -313,6 +343,7 @@ const UserList = () => {
                           required
                         />
                       </div>
+                      {/* Input para email (editável) */}
                       <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                         <label className="block mb-1">Email:</label>
                         <input
@@ -325,6 +356,7 @@ const UserList = () => {
                           required
                         />
                       </div>
+                      {/* Input para endereço (editável) */}
                       <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                         <label className="block mb-1">Endereço:</label>
                         <input
@@ -336,6 +368,7 @@ const UserList = () => {
                           placeholder="Digite o endereço"
                         />
                       </div>
+                      {/* Input para telefone com máscara (editável) */}
                       <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                         <label className="block mb-1">Telefone:</label>
                         <MaskedInput
@@ -347,6 +380,7 @@ const UserList = () => {
                           onChange={handleInputChangeNewUser}
                         />
                       </div>
+                      {/* Input para CPF com máscara (editável) */}
                       <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                         <label className="block mb-1">CPF:</label>
                         <MaskedInput
@@ -359,6 +393,7 @@ const UserList = () => {
                           required
                         />
                       </div>
+                      {/* Input para data de nascimento (editável) */}
                       <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                         <label className="block mb-1">Data de Nascimento:</label>
                         <input
@@ -370,6 +405,7 @@ const UserList = () => {
                         />
                       </div>
                     </div>
+                    {/* Botão para atualizar usuário */}
                     <button
                       type="submit"
                       className="px-4 py-2 bg-green-500 text-white rounded"
@@ -378,6 +414,7 @@ const UserList = () => {
                     </button>
                   </form>
                 ) : (
+                  // Ícones para editar e excluir usuário
                   <div className="ml-auto">
                     <FontAwesomeIcon
                       icon={faEdit}
@@ -404,12 +441,14 @@ const UserList = () => {
             <p className="text-lg font-bold mb-4">Confirmar Exclusão</p>
             <p>Tem certeza que deseja excluir o usuário {userToDelete.nome}?</p>
             <div className="mt-4 flex justify-end">
+              {/* Botão para excluir usuário */}
               <button
                 className="px-4 py-2 bg-red-500 text-white rounded mr-2"
                 onClick={confirmDeleteUser}
               >
                 Excluir
               </button>
+              {/* Botão para cancelar exclusão */}
               <button
                 className="px-4 py-2 bg-gray-300 rounded"
                 onClick={closeModal}

@@ -25,9 +25,9 @@ Este é o backend do projeto CRUD, uma aplicação simples para gerenciar usuár
    Utilize npm (Node Package Manager):
 
    ```bash
-   npm init -y;  
-   npm install express mysql2 sequelize dotenv cors;
-   npm install --save-dev nodemon;
+   npm init -y  
+   npm install express mysql2 sequelize dotenv cors
+   npm install --save-dev nodemon
    npm install axios body-parser 
    ```
 
