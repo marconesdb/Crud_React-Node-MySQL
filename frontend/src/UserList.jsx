@@ -272,7 +272,7 @@ const UserList = () => {
         <input
           type="text"
           className="px-4 py-2 border border-gray-300 rounded mr-2 w-full max-w-md"
-          placeholder="Pesquisar por nome ou ID"
+          placeholder="Pesquisar por nome do usuário"
           value={searchTerm}
           onChange={handleInputChange}
         />
