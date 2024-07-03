@@ -19,6 +19,7 @@ const UserList = () => {
   const [editingUserId, setEditingUserId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [userMessages, setUserMessages] = useState({});
 
   useEffect(() => {
     const eventSource = new EventSource('http://localhost:3000/api/events');
@@ -105,9 +106,15 @@ const UserList = () => {
       const response = await axios.get('http://localhost:3000/api/users');
       setUsers(response.data);
       setFilteredUsers(response.data);
-      setConfirmationMessage('Usuário excluído com sucesso.');
+      setUserMessages(prevMessages => ({
+        ...prevMessages,
+        [userId]: 'Usuário excluído com sucesso.'
+      }));
       setTimeout(() => {
-        setConfirmationMessage('');
+        setUserMessages(prevMessages => ({
+          ...prevMessages,
+          [userId]: ''
+        }));
       }, 10000); // Clear message after 10 seconds
     } catch (error) {
       console.error('Erro ao excluir usuário:', error);
@@ -145,9 +152,15 @@ const UserList = () => {
       const response = await axios.get('http://localhost:3000/api/users');
       setUsers(response.data);
       setFilteredUsers(response.data);
-      setConfirmationMessage('Usuário atualizado com sucesso.');
+      setUserMessages(prevMessages => ({
+        ...prevMessages,
+        [editingUserId]: 'Usuário atualizado com sucesso.'
+      }));
       setTimeout(() => {
-        setConfirmationMessage('');
+        setUserMessages(prevMessages => ({
+          ...prevMessages,
+          [editingUserId]: ''
+        }));
       }, 10000); // Clear message after 10 seconds
     } catch (error) {
       console.error('Erro ao atualizar usuário:', error);
@@ -276,6 +289,11 @@ const UserList = () => {
               <p><strong><em>Telefone:</em> </strong>{user.telefone}</p>
               <p><strong><em>CPF:</em></strong> {user.cpf}</p>
               <p><strong><em>Data de Nascimento:</em></strong> {user.dataNascimento}</p>
+              {userMessages[user.id] && (
+                <div className="mb-4 text-yellow-400 font-bold">
+                  {userMessages[user.id]}
+                </div>
+              )}
               <div className="flex mt-2">
                 {editingUserId === user.id ? (
                   <form onSubmit={handleUpdateUser} className="space-y-4">
