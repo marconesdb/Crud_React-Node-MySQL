@@ -184,7 +184,7 @@ const UserList = () => {
         <form onSubmit={handleAddUser} className="space-y-4">
           <div className="flex flex-wrap -mx-2">
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label className="block mb-1">Nome:</label>
+              <label className="block mb-1 font-bold">Nome:</label>
               <input
                 type="text"
                 name="nome"
@@ -196,7 +196,7 @@ const UserList = () => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label className="block mb-1">Email:</label>
+              <label className="block mb-1 font-bold">Email:</label>
               <input
                 type="email"
                 name="email"
@@ -208,7 +208,7 @@ const UserList = () => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label className="block mb-1">Endereço:</label>
+              <label className="block mb-1 font-bold">Endereço:</label>
               <input
                 type="text"
                 name="endereco"
@@ -219,7 +219,7 @@ const UserList = () => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label className="block mb-1">Telefone:</label>
+              <label className="block mb-1 font-bold">Telefone:</label>
               <InputMask
                 mask="(99) 99999-9999"
                 maskChar=""
@@ -232,7 +232,7 @@ const UserList = () => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label className="block mb-1">CPF:</label>
+              <label className="block mb-1 font-bold">CPF:</label>
               <InputMask
                 mask="999.999.999-99"
                 maskChar=""
@@ -246,7 +246,7 @@ const UserList = () => {
               />
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-              <label className="block mb-1">Data de Nascimento:</label>
+              <label className="block mb-1 font-bold">Data de Nascimento:</label>
               <input
                 type="date"
                 name="dataNascimento"
